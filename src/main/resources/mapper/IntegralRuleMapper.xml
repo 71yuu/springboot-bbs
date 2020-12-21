@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.mapper.IntegralRuleMapper">
+  <resultMap id="BaseResultMap" type="com.bbs.domain.IntegralRule">
+    <!--@mbg.generated generated on Wed Dec 16 10:44:54 CST 2020.-->
+    <!--@Table integral_rule-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rule_name" jdbcType="VARCHAR" property="ruleName" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="daily_limit" jdbcType="INTEGER" property="dailyLimit" />
+    <result column="rule_flag" jdbcType="VARCHAR" property="ruleFlag" />
+    <result column="explain" jdbcType="VARCHAR" property="explain" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Wed Dec 16 10:44:54 CST 2020.-->
+    id, rule_name, integral, daily_limit, rule_flag, `explain`
+  </sql>
+</mapper>

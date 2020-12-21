@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.mapper.SignMapper">
+  <resultMap id="BaseResultMap" type="com.bbs.domain.Sign">
+    <!--@mbg.generated generated on Wed Dec 16 10:44:54 CST 2020.-->
+    <!--@Table sign-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sign_user" jdbcType="INTEGER" property="signUser" />
+    <result column="sign_time" jdbcType="TIMESTAMP" property="signTime" />
+    <result column="sign_integral" jdbcType="INTEGER" property="signIntegral" />
+    <result column="continuity_sign" jdbcType="INTEGER" property="continuitySign" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Wed Dec 16 10:44:54 CST 2020.-->
+    id, sign_user, sign_time, sign_integral, continuity_sign
+  </sql>
+</mapper>

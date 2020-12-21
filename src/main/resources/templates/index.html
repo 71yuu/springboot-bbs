@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>学习社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/demo.css"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/zoom.js"></script>
+</head>
+
+<script type="application/javascript">
+    window.onload = function () {
+        let closable = window.localStorage.getItem("closable");
+        if (closable === "1") {
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
+
+<body style="background-image: url('/img/back.jpg')">
+
+<div th:insert="nav :: nav"></div>
+
+<div class="container-fluid main" style="background-image: url('/img/back.jpg')">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 back" style="margin-right: 50px">
+            <h2><span class="glyphicon glyphicon-list" style="margin-right: 10px;" aria-hidden="true"></span><span class="spanB">热门榜单</span></h2>
+            <hr>
+            <div class="media" th:each="question : ${hotQuestions}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object media-avatar img-rounded" th:src="${question.user.headUrl}">
+                    </a>
+                </div>
+                <div class="media-body"  style="max-width: 630px">
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
+                    </h4>
+                    <div style="margin-bottom: 5px" th:text="${question.desc}">
+                    </div>
+                    <div class="bigbox">
+                        <div class="imgbox">
+                            <img class="smallimg"  width="100px" height="75px;" style="margin-right: 10px; margin-bottom: 10px; border-radius: 5px" th:src="${img}" th:each="img : ${question.imgs}">
+                        </div>
+                        <img src="" alt="" class="bigimg">
+                        <div class="mask">
+                            <img src="/img/close.png" alt="">
+                        </div>
+                    </div>
+                    <span class="text-desc">
+                        <span th:text="${question.commentCount}"></span> 个回复 ・
+                        <span th:text="${question.viewCount}"></span> 次浏览 ・
+                        <span th:text="${#dates.format(question.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                    </span>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 back"  style="margin-right: 50px;">
+            <h2><span class="glyphicon" aria-hidden="true"></span>
+                <ul class="nav navbar-nav">
+                    <li class="spanB" th:each="cat : ${cats}" th:style="${cat.id == catId ? 'background: aqua;' :''}"><a th:href="@{/(page=1, search=${search}, catId=${cat.id})}">[[${cat.catName}]]</a></li>
+                </ul>
+            </h2>
+
+            <hr>
+
+            <div class="media" th:each="question : ${questionPage.list}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object media-avatar img-rounded" th:src="${question.user.headUrl}">
+                    </a>
+                </div>
+                <div class="media-body"  style="max-width: 630px">
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
+                    </h4>
+                    <div style="margin-bottom: 5px" th:text="${question.desc}">
+                    </div>
+                    <div class="bigbox">
+                        <div class="imgbox">
+                            <img class="smallimg"  width="200px" height="155px;" style="margin-right: 10px; margin-bottom: 10px; border-radius: 5px" th:src="${img}" th:each="img : ${question.imgs}">
+                        </div>
+                        <img src="" alt="" class="bigimg">
+                        <div class="mask">
+                            <img src="/img/close.png" alt="">
+                        </div>
+                    </div>
+                    <span class="text-desc">
+                        <span th:text="${question.commentCount}"></span> 个回复 ・
+                        <span th:text="${question.viewCount}"></span> 次浏览 ・
+                        <span th:text="${#dates.format(question.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                    </span>
+
+
+
+                </div>
+            </div>
+            <nav aria-label="Page navigation" class="navbar-right" style="margin-right: 20px;">
+                <ul class="pagination" th:if="${questionPage.pageTotal != 0}">
+                    <li>
+                        <a th:if="${questionPage.page > 1}" th:href="@{/(page=1, search=${search}, catId=${catId})}"
+                           aria-label="FirstPage">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${questionPage.page != 1}" th:href="@{/(page=${questionPage.page - 1}, search=${search}, catId=${catId})}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page : ${#numbers.sequence(1, questionPage.pageTotal)}" th:class="${questionPage.page == page}? 'active' : ''">
+                        <a th:href="@{/(page=${page}, search=${search}, catId=${catId})}" th:text="${page}"></a>
+                    </li>
+                    <li>
+                        <a th:if="${questionPage.page != questionPage.pageTotal}" th:href="@{/(page=${questionPage.page + 1}, search=${search}, catId=${catId})}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${questionPage.page != questionPage.pageTotal}" th:href="@{/(page=${questionPage.pageTotal}, search=${search}, catId=${catId})}"
+                           aria-label="EndPage">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 back">
+            <h2><span class="glyphicon glyphicon-list" style="margin-right: 10px;" aria-hidden="true"></span><span class="spanB">公告栏</span></h2>
+            <hr>
+            <div class="panel panel-default"  style="background:rgba(0, 0, 0, 0)" th:if="${notice != null}">
+                <div class="panel-body">
+                    [[${notice.notice}]]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="footer :: footer"></div>
+</body>
+<style type="text/css">
+    .back {
+        background-image: url('/img/left.jpg');
+        border-radius: 3% 3% 3% 3%;
+    }
+    .spanB {
+        border-radius: 8px;
+        border: 2px solid white;
+        margin-right: 3px;
+    }
+    .bigimg{width:600px;position: fixed;left: 0;top: 0; right: 0;bottom: 0;margin:auto;display: none;z-index:9999;border: 10px solid #fff;}
+    .mask{position: fixed;left: 0;top: 0; right: 0;bottom: 0;background-color: #000;opacity:0.5;filter: Alpha(opacity=50);z-index: 98;transition:all 1s;display: none}
+    .imgbox:hover{cursor:zoom-in}
+    .mask:hover{cursor:zoom-out}
+    .mask>img{position: fixed;right:10px;top: 10px;width: 60px;}
+    .mask>img:hover{cursor:pointer}
+</style>
+
+<script type="text/javascript">
+    $(function(){
+        /*
+         smallimg   // 小图
+         bigimg  //点击放大的图片
+         mask   //黑色遮罩
+         */
+        var obj = new zoom('mask', 'bigimg','smallimg');
+        obj.init();
+    })
+</script>
+</html>

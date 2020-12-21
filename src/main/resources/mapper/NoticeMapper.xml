@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.mapper.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.bbs.domain.Notice">
+    <!--@mbg.generated generated on Fri Dec 18 16:14:39 CST 2020.-->
+    <!--@Table notice-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="notice" jdbcType="VARCHAR" property="notice" />
+    <result column="notice_time" jdbcType="TIMESTAMP" property="noticeTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Dec 18 16:14:39 CST 2020.-->
+    id, notice, notice_time
+  </sql>
+</mapper>

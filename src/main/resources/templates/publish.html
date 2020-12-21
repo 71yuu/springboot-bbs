@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布 - 学习社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/demo.css"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script type="text/javascript" src="/js/wangEditor.js"></script>
+</head>
+<body   style="background-image: url('/img/back.jpg')">
+<div th:insert="nav :: nav"></div>
+<div class="container-fluid main" style="background-image: url('/img/left.jpg')">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12" style="margin-bottom: 15px;">
+
+            <h2><span class="glyphicon glyphicon-plus" style="margin-right: 10px;" aria-hidden="true"></span>发起</h2>
+            <hr>
+
+            <form action="/question/publish" method="post">
+                <input type="hidden" name="id" th:value="${question != null ? question.id : ''}">
+                <div class="form-group">
+                    <label for="title">标题：</label>
+                    <input type="text" style="background:rgba(0, 0, 0, 0)" class="form-control" th:value="${question != null ? question.title : ''}" id="title" name="title" placeholder="标题">
+                </div>
+                <div class="form-group">
+                    <label for="title">发布板块：</label>
+                    <select name="catId" class="form-control" style="background:rgba(0, 0, 0, 0)">
+                        <option th:each="cat : ${cats}" th:value="${cat.id}"  th:selected="${question != null && cat.id == question.catId}">[[${cat.catName}]]</option>
+                    </select>
+<!--                    <input type="text" style="background:rgba(0, 0, 0, 0)" class="form-control" th:value="${question != null ? question.title : ''}" id="title" name="title" placeholder="标题">-->
+                </div>
+                <div>
+                    <label for="description">内容：</label>
+                    <input type="hidden" name="content" id="content">
+                    <input type="hidden" name="text" id="text">
+                </div>
+
+                <div id="editor" th:utext="${question != null ? question.content : ''}" style="margin-bottom: 15px;"></div>
+                <script type="text/javascript">
+                    var E = window.wangEditor;
+                    var editor = new E('#editor');
+                    // 配置服务器端地址
+                    editor.customConfig.uploadImgServer = '/upload';
+                    editor.customConfig.uploadFileName = 'editorFiles'
+                    var $text1 = $('#content');
+                    var $text2 = $('#text');
+                    editor.customConfig.onchange = function (html) {
+                        // 监控变化，同步更新到 textarea
+                        $('#content').val(html)
+                        $('#text').val(editor.txt.text())
+                    };
+                    editor.create();
+                    // 初始化 textarea 的值
+                    $text1.val(editor.txt.html());
+                    $text2.val(editor.txt.text());
+                </script>
+                <span style="color:red" th:text="${error}"></span>
+                <button type="submit" class="btn btn-success btn-publish">发布</button>
+            </form>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12" style="margin-bottom: 15px;">
+            <h3>问题发起指南</h3>
+            <hr>
+            • 问题标题: 请用准确的语言描述您发布的问题思想<br>
+            • 问题补充: 详细补充您的问题内容, 并提供一些相关的素材以供参与者更多的了解您所要问题的主题思想<br>
+        </div>
+    </div>
+</div>
+<div th:insert="footer :: footer"></div>
+</body>
+</html>

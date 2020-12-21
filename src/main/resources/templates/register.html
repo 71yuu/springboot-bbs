@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注册 - 学习社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/demo.css"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body  style="background-image: url('/img/lr.jpg')">
+<!--<div th:insert="nav :: nav"></div>-->
+<div class="container-fluid main"  style="background:rgba(0, 0, 0, 0); margin-top: 200px;">
+    <div class="row">
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+        <div class="col-xs-10 col-sm-8 col-md-6">
+            <form style="margin: 100px 0;" action="/register" method="post">
+                <a href="/" target="_self">
+                    <img style="margin-left: 35%" height="100px" width="200px" src="/img/logo.jpg"/>
+                </a>
+                <div class="form-group">
+                    <label for="username">用户名 *</label>
+                    <input  style="background:rgba(0, 0, 0, 0)" name="username" type="text" class="form-control" id="username" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码 *</label>
+                    <input style="background:rgba(0, 0, 0, 0)" name="password" type="password" class="form-control" id="password" placeholder="密码">
+                </div>
+                <div class="form-group">
+                    <label for="re_password">重复密码 *</label>
+                    <input style="background:rgba(0, 0, 0, 0)" name="rePassword" type="password" class="form-control" id="rePassword" placeholder="重复密码">
+                </div>
+                <button type="submit" class="btn btn-default" style="width: 100%">注册</button>
+                <span style="color:red; float: right;" th:text="${error}"></span>
+            </form>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3"></div>
+    </div>
+
+</div>
+<!--<div th:insert="footer :: footer"></div>-->
+</body>
+</html>
